@@ -1,9 +1,10 @@
 from sqlalchemy import Column, Integer, String, DateTime, Sequence
-from Model.BaseModel import *
-from DB.DBConnector import *
+
+from DB.db_connector import DBConnector
+from DB.model.base_model import BaseModel
 
 
-class Usuario(BaseModel, DBConnector.base):
+class Usuario(BaseModel, DBConnector.get_base_model()):
 
     __tablename__ = 'usuarios'
     id = Column(Integer, Sequence('id_usuario'), primary_key=True)

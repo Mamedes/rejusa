@@ -1,13 +1,14 @@
-from sqlalchemy import Column, Integer, String, DateTime, Sequence, or_
+from sqlalchemy import Column, Integer, String, Sequence, ForeignKey
 from sqlalchemy.orm import relationship
-from Model.BaseModel import *
-from DB.DBConnector import *
+from DB.db_connector import DBConnector
+from DB.model.base_model import BaseModel
 
 
-class Recuperanda(BaseModel, DBConnector.base):
+class Recuperanda(BaseModel, DBConnector.get_base_model()):
 
     __tablename__ = 'recuperandas'
     id = Column(Integer, Sequence('id_recuperanda'), primary_key=True)
+    id_grupo = Column(Integer, ForeignKey('grupos.id'), nullable=False)
     razao_social = Column(String(100), nullable=False)
     nome_fantasia = Column(String(100), nullable=False)
     cnpj = Column(String(18), nullable=False)
@@ -18,7 +19,7 @@ class Recuperanda(BaseModel, DBConnector.base):
     email = Column(String(100), nullable=False)
     avatar = Column(String(100), nullable=False)
     observacao = Column(String(100), nullable=False)
-    grupo = relationship("Grupo", back_populates="recuperanda")
+
 
     def __init__(self):
         super().__init__()

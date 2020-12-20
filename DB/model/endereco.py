@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Sequence, String,Integer, SmallInteger, ForeignKey, BigInteger
-from Model.BaseModel import *
-from DB.DBConnector import *
+from DB.db_connector import DBConnector
+from DB.model.base_model import BaseModel
 
 
 class Endereco(BaseModel, DBConnector.get_base_model()):

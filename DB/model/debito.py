@@ -1,10 +1,9 @@
 from sqlalchemy import Column, Integer, Sequence, ForeignKey, String, Numeric
+from DB.db_connector import DBConnector
+from DB.model.base_model import BaseModel
 
-from Model.BaseModel import *
-from DB.DBConnector import *
 
-
-class Debito(BaseModel, DBConnector.base):
+class Debito(BaseModel, DBConnector.get_base_model()):
     """
     Classe de debitos.
     """

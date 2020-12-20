@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Sequence, String, SmallInteger, ForeignKey
 from sqlalchemy.orm import relationship
-from Model.BaseModel import *
-from DB.DBConnector import *
+from DB.db_connector import DBConnector
+from DB.model.base_model import BaseModel
 
 
-class Municipio(BaseModel, DBConnector.base):
+class Municipio(BaseModel, DBConnector.get_base_model()):
     """
     Classe de municípios
     """

@@ -1,16 +1,16 @@
 from sqlalchemy import Column, Integer, Sequence, ForeignKey, String, Boolean, BigInteger
 from sqlalchemy.orm import relationship
-from Model.BaseModel import *
-from DB.DBConnector import *
+from DB.db_connector import DBConnector
+from DB.model.base_model import BaseModel
 
 
-class Credor(BaseModel, DBConnector.base):
+class Credor(BaseModel, DBConnector.get_base_model()):
     """
     Classe de credores.
     """
     __tablename__ = 'credores'
     id = Column(Integer, Sequence('id_credor'), primary_key=True)
-    id_recuperanda = Column(BigInteger, ForeignKey('recuperandas.id'), nullable=False)
+    id_recuperanda = Column(Integer, ForeignKey('recuperandas.id'), nullable=False)
     nome = Column(String(200), nullable=False)
     cnpj = Column(String(18), nullable=False)
     telefone = Column(String(14))

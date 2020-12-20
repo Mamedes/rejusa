@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Sequence, String, SmallInteger
 from sqlalchemy.orm import relationship
-from Model.BaseModel import *
-from DB.DBConnector import *
+from DB.db_connector import DBConnector
+from DB.model.base_model import BaseModel
 
 
-class Estado(BaseModel, DBConnector.base):
+class Estado(BaseModel, DBConnector.get_base_model()):
     """
     Classe de estados
     """
