@@ -12,7 +12,6 @@ class Municipio(BaseModel, DBConnector.get_base_model()):
     id = Column(SmallInteger, Sequence('id_municipio'), primary_key=True)
     id_estado = Column(SmallInteger, ForeignKey('estados.id'), nullable=False)
     nome = Column(String(50))
-    enderecos = relationship('Endereco', backref='municipio')
 
     def __init__(self):
         super().__init__()

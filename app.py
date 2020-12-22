@@ -27,6 +27,7 @@ def create_app():
     """Factory principoal"""
     app = Flask(__name__)
     app.config['FLASK_ADMIN_SWATCH'] = 'flatly'
+    app.config['SECRET_KEY'] = 'mysecret'
     load_dotenv()
     init_database()
     admin.init_app(app)

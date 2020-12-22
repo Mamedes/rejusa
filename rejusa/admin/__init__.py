@@ -21,10 +21,10 @@ def init_app(app):
     admin.init_app(app)
     with DBConnector.get_session() as session:
         admin.add_view(ModelView(Grupo, session))
+        admin.add_view(ModelView(Recuperanda, session))
+        admin.add_view(ModelView(Endereco, session))
         admin.add_view(ModelView(Credor, session))
         admin.add_view(ModelView(Debito, session))
-        admin.add_view(ModelView(Endereco, session))
-        admin.add_view(ModelView(Recuperanda, session))
-        admin.add_view(ModelView(Usuario, session))
         admin.add_view(ModelView(Municipio, session))
         admin.add_view(ModelView(Estado, session))
+        admin.add_view(ModelView(Usuario, session))
