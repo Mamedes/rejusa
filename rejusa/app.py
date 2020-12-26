@@ -1,15 +1,14 @@
-import views
 from flask import Flask
 from dotenv import load_dotenv
-from DB.model.credores import Credor
-from DB.model.debito import Debito
-from DB.model.endereco import Endereco
-from DB.model.estado import Estado
-from DB.model.grupo import Grupo
-from DB.model.municipio import Municipio
-from DB.model.recuperanda import Recuperanda
-from DB.model.usuario import Usuario
-from rejusa import admin
+from rejusa.DB.model.credores import Credor
+from rejusa.DB.model.debito import Debito
+from rejusa.DB.model.endereco import Endereco
+from rejusa.DB.model.estado import Estado
+from rejusa.DB.model.grupo import Grupo
+from rejusa.DB.model.municipio import Municipio
+from rejusa.DB.model.recuperanda import Recuperanda
+from rejusa.DB.model.usuario import Usuario
+from rejusa.admin import admin
 
 
 def init_database():
@@ -31,7 +30,6 @@ def create_app():
     load_dotenv()
     init_database()
     admin.init_app(app)
-    views.init_app(app)
     return app
 
 

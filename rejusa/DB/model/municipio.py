@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Sequence, String, SmallInteger, ForeignKey
-from sqlalchemy.orm import relationship
-from DB.db_connector import DBConnector
-from DB.model.base_model import BaseModel
+from rejusa.DB.db_connector import DBConnector
+from rejusa.DB.model.base_model import BaseModel
 
 
 class Municipio(BaseModel, DBConnector.get_base_model()):
