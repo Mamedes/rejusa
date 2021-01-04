@@ -7,4 +7,4 @@ email_validator
 python-decouple
 gunicorn
 psycopg2
-
+python-dotenv
