@@ -1,7 +1,10 @@
 flask
-sqlalchemy
-flask-migrate
-flask-admin
-python-dotenv
-mysql-connector
-pycryptodome
+flask_login
+flask_migrate
+flask_wtf
+flask_sqlalchemy==2.*
+email_validator
+python-decouple
+gunicorn
+psycopg2
+
