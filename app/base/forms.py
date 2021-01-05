@@ -1,19 +1,23 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 from flask_wtf import FlaskForm
-from wtforms import TextField, PasswordField
+from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, Email, DataRequired
 
-## login and registration
+
+# login and registration
 
 class LoginForm(FlaskForm):
-    username = TextField    ('Username', id='username_login'   , validators=[DataRequired()])
-    password = PasswordField('Password', id='pwd_login'        , validators=[DataRequired()])
+    username = StringField('Username', id='username_login', validators=[DataRequired()])
+    password = PasswordField('Password', id='pwd_login', validators=[DataRequired()])
+
 
 class CreateAccountForm(FlaskForm):
-    username = TextField('Username'     , id='username_create' , validators=[DataRequired()])
-    email    = TextField('Email'        , id='email_create'    , validators=[DataRequired(), Email()])
-    password = PasswordField('Password' , id='pwd_create'      , validators=[DataRequired()])
+    username = StringField('Username', id='username_create', validators=[DataRequired()])
+    email = StringField('Email', id='email_create', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', id='pwd_create', validators=[DataRequired()])
+
+
+"""" Create Grupo """
+
+
+class CreateGrupoForm(FlaskForm):
+    nome = StringField('Nome', id='nome_create', validators=[DataRequired()])

@@ -1,4 +1,4 @@
-flask
+flask~=1.1.2
 flask_login
 flask_migrate
 flask_wtf
@@ -8,3 +8,7 @@ python-decouple
 gunicorn
 psycopg2
 python-dotenv
+
+WTForms~=2.3.3
+SQLAlchemy~=1.3.22
+Jinja2~=2.11.2
