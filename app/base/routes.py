@@ -8,8 +8,8 @@ from flask_login import (
 
 from app import db, login_manager
 from app.base import blueprint
-from app.base.forms import LoginForm, CreateAccountForm
-from app.base.models import User
+from app.base.forms import LoginForm, CreateAccountForm, CreateGrupoForm
+from app.base.models import User, Grupo
 from app.base.util import verify_pass
 
 
@@ -48,7 +48,6 @@ def login():
 
 @blueprint.route('/register', methods=['GET', 'POST'])
 def register():
-    login_form = LoginForm(request.form)
     create_account_form = CreateAccountForm(request.form)
     if 'register' in request.form:
 
@@ -100,7 +99,46 @@ def shutdown():
     return 'Server shutting down...'
 
 
-## Errors
+@blueprint.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    create_grupo_form = CreateGrupoForm(request.form)
+    result = Grupo.query.filter_by()
+    if result:
+        return render_template('dashboard/dashboard.html',
+                               grupos=result, form=create_grupo_form)
+    else:
+        return render_template('dashboard/dashboard.html',
+                               msg='Não encontramaos grupos cadastrados na nossa base',
+                               success=False, form=create_grupo_form)
+
+
+@blueprint.route('grupo_add', methods=['GET', 'POST'])
+@login_required
+def grupo_add():
+    create_grupo_form = CreateGrupoForm(request.form)
+    if 'grupo' in request.form:
+
+        grupo = request.form['grupo']
+        print(grupo)
+        # Check grupo exists
+        grupo = Grupo.query.filter_by(nome=grupo).first()
+        if grupo:
+            return render_template('dashboard/dashboard.html',
+                                   msg='Grupo já registrado',
+                                   success=False,
+                                   form=create_grupo_form)
+        # else we can create the user
+        grupo = Grupo(**request.form)
+        db.session.add(grupo)
+        db.session.commit()
+
+        return redirect(url_for('base_blueprint.dashboard'))
+
+    else:
+        return redirect(url_for('base_blueprint.dashboard'))
+# Errors
+
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

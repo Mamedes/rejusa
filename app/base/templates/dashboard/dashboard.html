@@ -1,0 +1,105 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="card-tools">
+    <h6 class="card-category">
+        {% if msg %}
+        <span class="text-danger">{{ msg | safe }}</span>
+        {% else %}
+
+        {% endif %}
+    </h6>
+    <button type="button" class="btn btn-tool" data-toggle="modal" data-target=".bd-example-modal-lg">
+        <i class="fa fa-plus"></i>
+    </button>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="card-header">
+                    <h5 class="card-title">Cadastrar Grupo</h5>
+                </div>
+                <h6 class="card-category">
+                    {% if msg %}
+                    <span class="text-danger">{{ msg | safe }}</span>
+                    {% else %}
+                    Complete seu Cadastro
+                    {% endif %}
+                </h6>
+                <br/>
+                <form role="form"  action="{{ url_for('base_blueprint.grupo_add') }}" method="post">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+
+                        <label class="bmd-label-floating">Nome</label>
+                        {{ form.nome(class="form-control") }}
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="submit" name="grupo" class="btn btn-primary pull-left">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+</div>
+<div class="row">
+
+    <div class="card">
+        <div class="card-header card-header-warning">
+            <h4 class="card-title">Grupos</h4>
+
+        </div>
+        <div class="card-body table-responsive">
+            <table class="table table-hover">
+                <thead class="text-warning">
+                <th>ID</th>
+                <th>Nome</th>
+                </thead>
+                <tbody>
+
+                {% for grupo in grupos %}
+                <tr>
+                    <td>{{grupo.id}}</td>
+                    <td>{{grupo.nome}}</td>
+                </tr>
+                 {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      md.initDashboardPageCharts();
+
+    });
+
+
+
+
+
+
+
+
+
+
+</script>
+
+{% endblock javascripts %}

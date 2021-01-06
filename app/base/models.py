@@ -44,9 +44,9 @@ def request_loader(request):
 
 class Grupo(db.Model):
     """
-    Classe de grupos.
+    Classe de Grupo.
     """
-    __tablename__ = 'grupos'
+    __tablename__ = 'grupo'
     id = Column(Integer, Sequence('id_grupo'), primary_key=True)
     nome = Column(String(200), nullable=False, unique=True)
     # recuperanda = relationship('Recuperanda', backref='grupo')
