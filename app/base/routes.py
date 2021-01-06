@@ -104,12 +104,13 @@ def shutdown():
 def dashboard():
     create_grupo_form = CreateGrupoForm(request.form)
     result = Grupo.query.filter_by()
+
     if result:
         return render_template('dashboard/dashboard.html',
                                grupos=result, form=create_grupo_form)
     else:
         return render_template('dashboard/dashboard.html',
-                               msg='Não encontramaos grupos cadastrados na nossa base',
+
                                success=False, form=create_grupo_form)
 
 
@@ -119,15 +120,14 @@ def grupo_add():
     create_grupo_form = CreateGrupoForm(request.form)
     if 'grupo' in request.form:
 
-        grupo = request.form['grupo']
-        print(grupo)
+        grupo = create_grupo_form.nome.data
         # Check grupo exists
-        grupo = Grupo.query.filter_by(nome=grupo).first()
-        if grupo:
-            return render_template('dashboard/dashboard.html',
-                                   msg='Grupo já registrado',
-                                   success=False,
-                                   form=create_grupo_form)
+
+        result = Grupo.query.filter_by(nome=grupo).first()
+
+        if result:
+            return redirect(url_for('base_blueprint.dashboard'))
+
         # else we can create the user
         grupo = Grupo(**request.form)
         db.session.add(grupo)
@@ -137,6 +137,8 @@ def grupo_add():
 
     else:
         return redirect(url_for('base_blueprint.dashboard'))
+
+
 # Errors
 
 
