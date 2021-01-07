@@ -8,8 +8,8 @@ from flask_login import (
 
 from app import db, login_manager
 from app.base import blueprint
-from app.base.forms import LoginForm, CreateAccountForm, CreateGrupoForm
-from app.base.models import User, Grupo
+from app.base.forms import LoginForm, CreateAccountForm, CreateGrupoForm, CreateRecuperandasForm
+from app.base.models import User, Grupo, Recuperanda
 from app.base.util import verify_pass
 
 
@@ -138,6 +138,40 @@ def grupo_add():
     else:
         return redirect(url_for('base_blueprint.dashboard'))
 
+
+@blueprint.route('/recuperandas/<string:id>', methods=['GET', 'POST'])
+@login_required
+def recuperanda(id):
+    create_recuperanda_form = CreateRecuperandasForm(request.form)
+    result = Recuperanda.query.filter_by(id_grupo=id)
+    print(result)
+    if result:
+        return render_template('recuperandas/recuperandas.html',
+                               recuperandas=result, form=create_recuperanda_form)
+    else:
+        return render_template('recuperandas/recuperandas.html',
+
+                               success=False, form=create_recuperanda_form)
+
+
+@blueprint.route('recuperanda_add', methods=['GET', 'POST'])
+@login_required
+def recuperanda_add():
+    create_recuperanda_form = CreateRecuperandasForm(request.form)
+    if 'recuperanda' in request.form:
+        id_grupo = create_recuperanda_form.id_grupo.data
+        # # Check grupo exists
+        # result = Grupo.query.filter_by(nome=grupo).first()
+        #
+        # if result:
+        #     return redirect(url_for('base_blueprint.dashboard'))
+        #
+        # # else we can create the user
+        recuperanda = Recuperanda(**request.form)
+        db.session.add(recuperanda)
+        db.session.commit()
+
+    return redirect(url_for(f'recuperandas/{id_grupo}'))
 
 # Errors
 

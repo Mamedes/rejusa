@@ -55,15 +55,16 @@
 <div class="row">
 
     <div class="card">
-        <div class="card-header card-header-warning">
+        <div class="card-header card-header-primary">
             <h4 class="card-title">Grupos</h4>
 
         </div>
         <div class="card-body table-responsive">
             <table class="table table-hover">
-                <thead class="text-warning">
+                <thead class="text-primary">
                 <th>ID</th>
                 <th>Nome</th>
+                <th>Detalhes</th>
 
                 </thead>
                 <tbody>
@@ -72,7 +73,7 @@
                 <tr>
                     <td>{{grupo.id}}</td>
                     <td>{{grupo.nome}}</td>
-                    <td><a href="/index" class="main Tertiary">
+                    <td><a href="recuperandas/{{grupo.id}}" class="main Tertiary">
                         <span class="material-icons">
                         analytics
                         </span>
