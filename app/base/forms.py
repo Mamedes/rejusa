@@ -29,7 +29,7 @@ class CreateGrupoForm(FlaskForm):
     nome = StringField('Nome', id='nome_create', validators=[DataRequired()])
 
 
-class CreateRecuperandasForm(FlaskForm):
+class CreateRecuperandaForm(FlaskForm):
     """"
     Create Recuperandas Form
     """
@@ -44,3 +44,16 @@ class CreateRecuperandasForm(FlaskForm):
     email = StringField('Email', id='email_create', validators=[DataRequired()])
     avatar = StringField('Avatar', id='avatar_create', validators=[DataRequired()])
     observacao = StringField('Observacao', id='nome_create', validators=[DataRequired()])
+
+
+class CreateCredorForm(FlaskForm):
+    """"
+    Create Recuperandas Form
+    """
+    id_recuperanda = IntegerField('ID Recuperanda', id='id_recuperanda_create', validators=[DataRequired()])
+    nome = StringField('Nome', id='nome_create', validators=[DataRequired()])
+    cnpj = StringField('CNPJ', id='cnpj_create', validators=[DataRequired()])
+    telefone = StringField('Telefone', id='telefone_create', validators=[DataRequired()])
+    email = StringField('Email', id='email_create', validators=[DataRequired()])
+
+

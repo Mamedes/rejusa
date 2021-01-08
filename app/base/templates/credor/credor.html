@@ -1,7 +1,5 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Dashboard {% endblock %}
-
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
@@ -22,7 +20,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="card-header">
-                    <h5 class="card-title">Cadastrar Grupo</h5>
+                    <h5 class="card-title">Cadastrar Credores</h5>
                 </div>
                 <h6 class="card-category">
                     {% if msg %}
@@ -32,17 +30,39 @@
                     {% endif %}
                 </h6>
                 <br/>
-                <form role="form"  action="{{ url_for('base_blueprint.grupo_add') }}" method="post">
+                <form role="form"  action="{{ url_for('base_blueprint.credor_add') }}" method="post">
                     {{ form.hidden_tag() }}
-                    <div class="form-group">
 
+                     <div class="form-group">
+                        <label class="bmd-label-floating">ID Recuperanda</label>
+                          {{ form.id_recuperanda(class="form-control", value=id_recuperanda, readonly=readonly) }}
+                    </div>
+
+                    <div class="form-group">
                         <label class="bmd-label-floating">Nome</label>
                         {{ form.nome(class="form-control") }}
                     </div>
+
+                    <div class="form-group">
+                        <label class="bmd-label-floating">CNPJ</label>
+                        {{ form.cnpj(class="form-control") }}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Telefone</label>
+                        {{ form.telefone(class="form-control") }}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Email</label>
+                        {{ form.email(class="form-control") }}
+                    </div>
+
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="submit" name="grupo" class="btn btn-primary pull-left">Salvar</button>
+                        <button type="submit" name="credor" class="btn btn-primary pull-left">Salvar</button>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -56,24 +76,28 @@
 
     <div class="card">
         <div class="card-header card-header-primary">
-            <h4 class="card-title">Grupos</h4>
+            <h4 class="card-title">Credor</h4>
 
         </div>
         <div class="card-body table-responsive">
             <table class="table table-hover">
                 <thead class="text-primary">
-                <th>ID</th>
+                <th>ID Recuperanda</th>
                 <th>Nome</th>
-                <th>Detalhes</th>
-
+                <th>CNPJ</th>
+                <th>Telefone</th>
+                <th>E-mail</th>
                 </thead>
                 <tbody>
 
-                {% for grupo in grupos %}
+                {% for credor in credores %}
                 <tr>
-                    <td>{{grupo.id}}</td>
-                    <td>{{grupo.nome}}</td>
-                    <td><a href="recuperanda/{{grupo.id}}" class="main Tertiary">
+                    <td>{{credor.id_recuperanda}}</td>
+                    <td>{{credor.nome}}</td>
+                    <td>{{credor.cnpj}}</td>
+                    <td>{{credor.telefone}}</td>
+                    <td>{{credor.Email}}</td>
+                    <td><a href="" class="main Tertiary">
                         <span class="material-icons">
                         analytics
                         </span>
@@ -97,15 +121,6 @@
       md.initDashboardPageCharts();
 
     });
-
-
-
-
-
-
-
-
-
 
 </script>
 

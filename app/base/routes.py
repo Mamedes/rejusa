@@ -8,8 +8,8 @@ from flask_login import (
 
 from app import db, login_manager
 from app.base import blueprint
-from app.base.forms import LoginForm, CreateAccountForm, CreateGrupoForm, CreateRecuperandasForm
-from app.base.models import User, Grupo, Recuperanda
+from app.base.forms import LoginForm, CreateAccountForm, CreateGrupoForm, CreateRecuperandaForm, CreateCredorForm
+from app.base.models import User, Grupo, Recuperanda, Credor
 from app.base.util import verify_pass
 
 
@@ -139,39 +139,57 @@ def grupo_add():
         return redirect(url_for('base_blueprint.dashboard'))
 
 
-@blueprint.route('/recuperandas/<string:id>', methods=['GET', 'POST'])
+@blueprint.route('/recuperanda/<string:id>', methods=['GET', 'POST'])
 @login_required
 def recuperanda(id):
-    create_recuperanda_form = CreateRecuperandasForm(request.form)
+    create_recuperanda_form = CreateRecuperandaForm(request.form)
     result = Recuperanda.query.filter_by(id_grupo=id)
-    print(result)
     if result:
         return render_template('recuperandas/recuperandas.html',
-                               recuperandas=result, form=create_recuperanda_form)
+                               recuperandas=result, form=create_recuperanda_form, id_grupo=id)
     else:
         return render_template('recuperandas/recuperandas.html',
 
-                               success=False, form=create_recuperanda_form)
+                               success=False, form=create_recuperanda_form, id_grupo=id)
 
 
 @blueprint.route('recuperanda_add', methods=['GET', 'POST'])
 @login_required
 def recuperanda_add():
-    create_recuperanda_form = CreateRecuperandasForm(request.form)
+    create_recuperanda_form = CreateRecuperandaForm(request.form)
     if 'recuperanda' in request.form:
         id_grupo = create_recuperanda_form.id_grupo.data
-        # # Check grupo exists
-        # result = Grupo.query.filter_by(nome=grupo).first()
-        #
-        # if result:
-        #     return redirect(url_for('base_blueprint.dashboard'))
-        #
-        # # else we can create the user
         recuperanda = Recuperanda(**request.form)
         db.session.add(recuperanda)
         db.session.commit()
+    return redirect(url_for('base_blueprint.recuperanda', id=id_grupo))
 
-    return redirect(url_for(f'recuperandas/{id_grupo}'))
+
+@blueprint.route('/credor/<string:id>', methods=['GET', 'POST'])
+@login_required
+def credor(id):
+    create_credor_form = CreateCredorForm(request.form)
+    result = Credor.query.filter_by(id_recuperanda=id)
+    if result:
+        return render_template('credor/credor.html',
+                               credores=result, form=create_credor_form, id_recuperanda=id)
+    else:
+        return render_template('credor/credor.html',
+
+                               success=False, form=create_credor_form, id_recuperanda=id)
+
+
+@blueprint.route('credor_add', methods=['GET', 'POST'])
+@login_required
+def credor_add():
+    create_credor_form = CreateCredorForm(request.form)
+    if 'credor' in request.form:
+        id_recuperanda = create_credor_form.id_recuperanda.data
+        credor = Credor(**request.form)
+        db.session.add(credor)
+        db.session.commit()
+        return redirect(url_for('base_blueprint.credor', id=id_recuperanda))
+
 
 # Errors
 

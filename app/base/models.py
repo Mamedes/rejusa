@@ -1,5 +1,5 @@
 from flask_login import UserMixin
-from sqlalchemy import Binary, Column, Integer, String, Sequence, ForeignKey
+from sqlalchemy import Binary, Column, Integer, String, Sequence, ForeignKey, Numeric
 from sqlalchemy.orm import relationship
 
 from app import db, login_manager
@@ -96,4 +96,57 @@ class Recuperanda(db.Model):
             setattr(self, property, value)
 
     def __repr__(self):
+        return str(self.nome_fantasia)
+
+
+class Credor(db.Model):
+    """
+    Classe de credores.
+    """
+    __tablename__ = 'credores'
+    id = Column(Integer, Sequence('id_credor'), primary_key=True)
+    id_recuperanda = Column(Integer, ForeignKey('recuperandas.id'), nullable=False)
+    nome = Column(String(200), nullable=False)
+    cnpj = Column(String(18), nullable=False)
+    telefone = Column(String(14))
+    email = Column(String(100), nullable=False)
+    debitos = relationship('Debito', backref='credor')
+
+    def __init__(self, **kwargs):
+        for property, value in kwargs.items():
+            # depending on whether value is an iterable or not, we must
+            # unpack it's value (when **kwargs is request.form, some values
+            # will be a 1-element list)
+            if hasattr(value, '__iter__') and not isinstance(value, str):
+                # the ,= unpack of a singleton fails PEP8 (travis flake8 test)
+                value = value[0]
+
+            setattr(self, property, value)
+
+    def __repr__(self):
         return str(self.nome)
+
+
+class Debito(db.Model):
+    """
+    Classe de debitos.
+    """
+    __tablename__ = 'debitos'
+    id = Column(Integer, Sequence('id_debito'), primary_key=True)
+    id_credores = Column(Integer, ForeignKey('credores.id'), nullable=False)
+    descricao = Column(String(200), nullable=False)
+    valor = Column(Numeric, nullable=False)
+
+    def __init__(self, **kwargs):
+        for property, value in kwargs.items():
+            # depending on whether value is an iterable or not, we must
+            # unpack it's value (when **kwargs is request.form, some values
+            # will be a 1-element list)
+            if hasattr(value, '__iter__') and not isinstance(value, str):
+                # the ,= unpack of a singleton fails PEP8 (travis flake8 test)
+                value = value[0]
+
+            setattr(self, property, value)
+
+    def __repr__(self):
+        return str(self.descricao)
