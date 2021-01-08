@@ -57,3 +57,13 @@ class CreateCredorForm(FlaskForm):
     email = StringField('Email', id='email_create', validators=[DataRequired()])
 
 
+class CreateDebitoForm(FlaskForm):
+    """"
+    Create Debito Form
+    """
+    id_credores = IntegerField('ID Credores', id='id_credores_create', validators=[DataRequired()])
+    descricao = StringField('Descrição', id='descricao_create', validators=[DataRequired()])
+    valor = StringField('Valor', id='valor_create', validators=[DataRequired()])
+
+
+

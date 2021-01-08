@@ -12,17 +12,15 @@
 
         {% endif %}
     </h6>
-    <button type="button"  class="btn btn-danger"data-toggle="modal" data-target=".bd-example-modal-lg">
-        <span class="material-icons">
-       add
-        </span>
+    <button type="button" class="btn btn-rose " data-toggle="modal" data-target=".bd-example-modal-lg">
+        <i class="material-icons">request_quote</i> Debitos
     </button>
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="card-header">
-                    <h5 class="card-title">Cadastrar Credores</h5>
+                    <h5 class="card-title">Cadastrar Debito</h5>
                 </div>
                 <h6 class="card-category">
                     {% if msg %}
@@ -32,37 +30,27 @@
                     {% endif %}
                 </h6>
                 <br/>
-                <form role="form"  action="{{ url_for('base_blueprint.credor_add') }}" method="post">
+                <form role="form"  action="{{ url_for('base_blueprint.debito_add') }}" method="post">
                     {{ form.hidden_tag() }}
 
                      <div class="form-group">
-                        <label class="bmd-label-floating">ID Recuperanda</label>
-                          {{ form.id_recuperanda(class="form-control", value=id_recuperanda, readonly=readonly) }}
+                        <label class="bmd-label-floating">ID Credor</label>
+                          {{ form.id_credores(class="form-control", value=id_credores, readonly=readonly) }}
                     </div>
 
                     <div class="form-group">
-                        <label class="bmd-label-floating">Nome</label>
-                        {{ form.nome(class="form-control") }}
+                        <label class="bmd-label-floating">Descrição</label>
+                        {{ form.descricao(class="form-control") }}
                     </div>
 
                     <div class="form-group">
-                        <label class="bmd-label-floating">CNPJ</label>
-                        {{ form.cnpj(class="form-control") }}
-                    </div>
-
-                    <div class="form-group">
-                        <label class="bmd-label-floating">Telefone</label>
-                        {{ form.telefone(class="form-control") }}
-                    </div>
-
-                    <div class="form-group">
-                        <label class="bmd-label-floating">Email</label>
-                        {{ form.email(class="form-control") }}
+                        <label class="bmd-label-floating">Valor</label>
+                        {{ form.valor(class="form-control") }}
                     </div>
 
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="submit" name="credor" class="btn btn-primary pull-left">Salvar</button>
+                        <button type="submit" name="debito" class="btn btn-primary pull-left">Salvar</button>
                     </div>
 
                 </form>
@@ -77,34 +65,24 @@
 <div class="row">
 
     <div class="card">
-        <div class="card-header card-header-danger">
-            <h4 class="card-title">Credor</h4>
+        <div class="card-header card-header-rose">
+            <h4 class="card-title">Debito</h4>
 
         </div>
         <div class="card-body table-responsive">
             <table class="table table-hover">
                 <thead class="text-danger">
                 <th>ID</th>
-                <th>Nome</th>
-                <th>CNPJ</th>
-                <th>Telefone</th>
-                <th>E-mail</th>
-                <th>Debitos</th>
+                <th>Descricao</th>
+                <th>Valor</th>
                 </thead>
                 <tbody>
 
-                {% for credor in credores %}
+                {% for debito in debitos %}
                 <tr>
-                    <td>{{credor.id}}</td>
-                    <td>{{credor.nome}}</td>
-                    <td>{{credor.cnpj}}</td>
-                    <td>{{credor.telefone}}</td>
-                    <td>{{credor.email}}</td>
-                    <td><a href="/debito/{{credor.id}}"class="main Tertiary">
-                        <span class="material-icons">
-                        analytics
-                        </span>
-                    </a></td>
+                    <td>{{debito.id}}</td>
+                    <td>{{debito.descricao}}</td>
+                    <td>{{debito.valor}}</td>
                 </tr>
                  {% endfor %}
             </table>

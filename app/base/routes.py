@@ -8,8 +8,15 @@ from flask_login import (
 
 from app import db, login_manager
 from app.base import blueprint
-from app.base.forms import LoginForm, CreateAccountForm, CreateGrupoForm, CreateRecuperandaForm, CreateCredorForm
-from app.base.models import User, Grupo, Recuperanda, Credor
+from app.base.forms import (
+    LoginForm,
+    CreateAccountForm,
+    CreateGrupoForm,
+    CreateRecuperandaForm,
+    CreateCredorForm,
+    CreateDebitoForm
+)
+from app.base.models import User, Grupo, Recuperanda, Credor, Debito
 from app.base.util import verify_pass
 
 
@@ -190,6 +197,31 @@ def credor_add():
         db.session.commit()
         return redirect(url_for('base_blueprint.credor', id=id_recuperanda))
 
+
+@blueprint.route('/debito/<string:id>', methods=['GET', 'POST'])
+@login_required
+def debito(id):
+    create_debito_form = CreateDebitoForm(request.form)
+    result = Debito.query.filter_by(id_credores=id)
+    if result:
+        return render_template('debito/debito.html',
+                               debitos=result, form=create_debito_form, id_credores=id)
+    else:
+        return render_template('debito/debito.html',
+
+                               success=False, form=create_debito_form, id_credores=id)
+
+
+@blueprint.route('debito_add', methods=['GET', 'POST'])
+@login_required
+def debito_add():
+    create_debito_form = CreateDebitoForm(request.form)
+    if 'debito' in request.form:
+        id_credores = create_debito_form.id_credores.data
+        debito = Debito(**request.form)
+        db.session.add(debito)
+        db.session.commit()
+        return redirect(url_for('base_blueprint.debito', id=id_credores))
 
 # Errors
 
