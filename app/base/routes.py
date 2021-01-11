@@ -65,7 +65,7 @@ def register():
         user = User.query.filter_by(username=username).first()
         if user:
             return render_template('accounts/register.html',
-                                   msg='Username already registered',
+                                   msg='Username já registrado',
                                    success=False,
                                    form=create_account_form)
 
@@ -73,7 +73,7 @@ def register():
         user = User.query.filter_by(email=email).first()
         if user:
             return render_template('accounts/register.html',
-                                   msg='Email already registered',
+                                   msg='Email já registrado',
                                    success=False,
                                    form=create_account_form)
 
@@ -83,7 +83,7 @@ def register():
         db.session.commit()
 
         return render_template('accounts/register.html',
-                               msg='User created please <a href="/login">login</a>',
+                               msg='Usuario Criado você já pode realizar seu <a href="/login">login</a>',
                                success=True,
                                form=create_account_form)
 

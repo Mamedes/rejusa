@@ -23,4 +23,5 @@ app = create_app( app_config )
 Migrate(app, db)
 
 if __name__ == "__main__":
+    # app.run(host='192.168.201.117', port=3333)
     app.run()
