@@ -6,7 +6,7 @@ from config import config_dict
 from app import create_app, db
 
 # WARNING: Don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True)
+DEBUG = config('DEBUG', default=False)
 
 # The configuration
 get_config_mode = 'Debug' if DEBUG else 'Production'
@@ -19,7 +19,7 @@ try:
 except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
 
-app = create_app( app_config ) 
+app = create_app(app_config)
 Migrate(app, db)
 
 if __name__ == "__main__":
