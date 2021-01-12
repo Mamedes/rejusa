@@ -1,108 +1,201 @@
-{% extends "layouts/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+<head>
 
-{% block content %}
-<div class="card-tools">
-    <h6 class="card-category">
-        {% if msg %}
-        <span class="text-danger">{{ msg | safe }}</span>
-        {% else %}
+    <meta charset="utf-8"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/static/assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>
+        REJUSA {% block title %}{% endblock %}
+    </title>
 
-        {% endif %}
-    </h6>
-    <button type="button" class="btn btn-rose " data-toggle="modal" data-target=".bd-example-modal-lg">
-        <i class="material-icons">request_quote</i> Debitos
-    </button>
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="card-header">
-                    <h5 class="card-title">Cadastrar Debito</h5>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+          name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link href="/static/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet"/>
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="/static/assets/demo/demo.css" rel="stylesheet"/>
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+
+<body class="">
+<div class="wrapper ">
+
+    <div class="sidebar" data-color="purple" data-background-color="white"
+         data-image="/static/assets/img/sidebar-1.jpg">
+        <div class="logo">
+        <span class="nav-link">
+          Rejusa Dashboard
+        </span>
+        </div>
+
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+
+                <li class="nav-item {% if 'index' in segment %} active {% endif %}">
+                    <a class="nav-link" href="/">
+                        <i class="material-icons">dashboard</i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+
+                             <li class="nav-item {% if 'index' in segment %} active {% endif %}">
+                                <a class="nav-link" href="/credor/{{id_credores}}">
+                                    <i class="material-icons">reply</i>
+                                    <p>Credor</p>
+                                </a>
+                            </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ url_for('base_blueprint.logout') }}">
+                        <i class="material-icons">directions_run</i>
+                        <p>Logout</p>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+
+    </div>
+
+
+    <div class="main-panel">
+
+        {% include 'includes/navigation.html' %}
+
+        <!-- End Navbar -->
+        <div class="content">
+            <div class="container-fluid">
+
+                {% block content %}
+                <div class="card-tools">
+                    <h6 class="card-category">
+                        {% if msg %}
+                        <span class="text-danger">{{ msg | safe }}</span>
+                        {% else %}
+
+                        {% endif %}
+                    </h6>
+                    <button type="button" class="btn btn-rose " data-toggle="modal" data-target=".bd-example-modal-lg">
+                        <i class="material-icons">request_quote</i> Debitos
+                    </button>
+                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                         aria-labelledby="myLargeModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="card-header">
+                                    <h5 class="card-title">Cadastrar Debito</h5>
+                                </div>
+                                <h6 class="card-category">
+                                    {% if msg %}
+                                    <span class="text-danger">{{ msg | safe }}</span>
+                                    {% else %}
+
+                                    {% endif %}
+                                </h6>
+                                <br/>
+                                <form role="form" action="{{ url_for('base_blueprint.debito_add') }}" method="post">
+                                    {{ form.hidden_tag() }}
+
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">ID Credor</label>
+                                        {{ form.id_credores(class="form-control", value=id_credores, readonly=readonly)
+                                        }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Descrição</label>
+                                        {{ form.descricao(class="form-control") }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Valor</label>
+                                        {{ form.valor(class="form-control") }}
+                                    </div>
+
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar
+                                        </button>
+                                        <button type="submit" name="debito" class="btn btn-primary pull-left">Salvar
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h6 class="card-category">
-                    {% if msg %}
-                    <span class="text-danger">{{ msg | safe }}</span>
-                    {% else %}
 
-                    {% endif %}
-                </h6>
-                <br/>
-                <form role="form"  action="{{ url_for('base_blueprint.debito_add') }}" method="post">
-                    {{ form.hidden_tag() }}
+                <div class="row">
 
-                     <div class="form-group">
-                        <label class="bmd-label-floating">ID Credor</label>
-                          {{ form.id_credores(class="form-control", value=id_credores, readonly=readonly) }}
+                </div>
+                <div class="row">
+
+                    <div class="card">
+                        <div class="card-header card-header-rose">
+                            <h4 class="card-title">Debito</h4>
+
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-hover">
+                                <thead class="text-danger">
+                                <th>ID</th>
+                                <th>Descricao</th>
+                                <th>Valor</th>
+                                </thead>
+                                <tbody>
+
+                                {% for debito in debitos %}
+                                <tr>
+                                    <td>{{debito.id}}</td>
+                                    <td>{{debito.descricao}}</td>
+                                    <td>{{debito.valor}}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="bmd-label-floating">Descrição</label>
-                        {{ form.descricao(class="form-control") }}
-                    </div>
-
-                    <div class="form-group">
-                        <label class="bmd-label-floating">Valor</label>
-                        {{ form.valor(class="form-control") }}
-                    </div>
-
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="submit" name="debito" class="btn btn-primary pull-left">Salvar</button>
-                    </div>
-
-                </form>
+                </div>
             </div>
+
+            {% endblock content %}
+
         </div>
     </div>
-</div>
 
-<div class="row">
+    {% include 'includes/footer.html' %}
 
-</div>
-<div class="row">
-
-    <div class="card">
-        <div class="card-header card-header-rose">
-            <h4 class="card-title">Debito</h4>
-
-        </div>
-        <div class="card-body table-responsive">
-            <table class="table table-hover">
-                <thead class="text-danger">
-                <th>ID</th>
-                <th>Descricao</th>
-                <th>Valor</th>
-                </thead>
-                <tbody>
-
-                {% for debito in debitos %}
-                <tr>
-                    <td>{{debito.id}}</td>
-                    <td>{{debito.descricao}}</td>
-                    <td>{{debito.valor}}</td>
-                </tr>
-                 {% endfor %}
-            </table>
-        </div>
-    </div>
 </div>
 </div>
 
-{% endblock content %}
+{% include 'includes/fixed-plugin.html' %}
+
+{% include 'includes/scripts.html' %}
+
+{% include 'includes/scripts-sidebar.html' %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
+{% block javascripts %}{% endblock javascripts %}
 
-<script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
+</body>
+</html>
 
-    });
 
-</script>
 
-{% endblock javascripts %}
+
+
+
+
+
+

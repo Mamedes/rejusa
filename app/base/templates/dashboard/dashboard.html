@@ -35,10 +35,10 @@
                 <form role="form"  action="{{ url_for('base_blueprint.grupo_add') }}" method="post">
                     {{ form.hidden_tag() }}
                     <div class="form-group">
-
                         <label class="bmd-label-floating">Nome</label>
                         {{ form.nome(class="form-control") }}
                     </div>
+
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="submit" name="grupo" class="btn btn-primary pull-left">Salvar</button>

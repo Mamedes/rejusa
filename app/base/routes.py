@@ -177,6 +177,7 @@ def recuperanda_add():
 def credor(id):
     create_credor_form = CreateCredorForm(request.form)
     result = Credor.query.filter_by(id_recuperanda=id)
+
     if result:
         return render_template('credor/credor.html',
                                credores=result, form=create_credor_form, id_recuperanda=id)
@@ -201,6 +202,7 @@ def credor_add():
 @blueprint.route('/debito/<string:id>', methods=['GET', 'POST'])
 @login_required
 def debito(id):
+
     create_debito_form = CreateDebitoForm(request.form)
     result = Debito.query.filter_by(id_credores=id)
     if result:
