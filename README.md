@@ -1,5 +1,6 @@
 <h1>Get the code </h1>
 <h3> cd flaskProject-rejusa</h3>
+<br>https://rejusa.herokuapp.com<br>
 
 Virtualenv modules installation (Windows based systems)
 virtualenv env
@@ -21,3 +22,6 @@ Start the application (development mode)
  --host=0.0.0.0 - expose the app on all network interfaces (default 127.0.0.1)
 --port=5000    - specify the app port (default 5000)  
 flask run --host=0.0.0.0 --port=5000
+
+
+
